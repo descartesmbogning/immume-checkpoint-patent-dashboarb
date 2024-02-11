@@ -312,17 +312,29 @@ layout = dbc.Container([
         figure=fig_juris_trend  # This is the line chart you created
     ), width=12)], className="mb-2 d-flex justify-content-center"),
     
-    # Example Row with an image link
+    #Example Row with an image link
     # dbc.Row(
     #     dbc.Col(
     #         html.A(
-    #             html.Img(src='/assets/inventor_icon.jpg', style={'width': '100%', 'height': 'auto'}),
-    #             href='https://www.example.com',  # Link URL
+    #             html.Img(src='/assets/biomedical_data_VOSviewer-screenshot.png', style={'width': '100%', 'height': 'auto'}),
+    #             href='http://tinyurl.com/25yw5o3a',  # Link URL
     #             target='_blank'  # Opens the link in a new tab
     #         ),
     #         width={"size": 6, "offset": 3}, className="d-flex justify-content-center mb-4"
     #     )
     # ),
+
+    dbc.Row([
+        dbc.Col(dcc.Link(
+            html.Div([
+                html.Img(src='/assets/biomedical_data_VOSviewer-screenshot.png', style={'max-width': '100%', 'max-height': '600px', 'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto'}),
+                # html.P("Inventors")
+            ]),
+            target='_blank',  # Opens the link in a new tab
+            href='http://tinyurl.com/25yw5o3a'
+        ), width={"size": 8, "offset": 1}, className="d-flex justify-content-center mt-5 mb-5"),  
+    ], className="mb-2 d-flex justify-content-center"),
+
 
     # dbc.Row(
     #     dbc.Col(

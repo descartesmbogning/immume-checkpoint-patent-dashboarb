@@ -126,6 +126,17 @@ layout = dbc.Container([
     dbc.Row(dbc.Col(dcc.Graph(id='inventor-line-chart'), width=12)),
 
 
+    # dbc.Row([
+    #     dbc.Col(dcc.Link(
+    #         html.Div([
+    #             html.Img(src='/assets/inventor_VOSviewer-screenshot.png', style={'max-width': '100%', 'max-height': '600px', 'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto'}),
+    #             # html.P("Inventors")
+    #         ]),
+    #         target='_blank',  # Opens the link in a new tab
+    #         href='http://tinyurl.com/2cuh8nca'
+    #     ), width={"size": 8, "offset": 1}, className="d-flex justify-content-center mt-5 mb-5"),  
+    # ], className="mb-2 d-flex justify-content-center"),
+
     dbc.Row([
         dbc.Col(dcc.Link(
             html.Div([
@@ -243,7 +254,7 @@ def update_inventor_line_chart(all_rows_data, slctd_row_indices, clickData):
             selected_inventors.append(clicked_inventor)
 
     # Aggregate data: count patents per year for each inventor
-    inventor_yearly_counts = df_trend.groupby(['Application Year', 'Inventor']).size().reset_index(name='Patent Count')
+    inventor_yearly_counts = df_trend.groupby(['Application Year', 'Inventor',]).size().reset_index(name='Patent Count',)
 
     # Create the line chart
     if selected_inventors:
@@ -253,7 +264,7 @@ def update_inventor_line_chart(all_rows_data, slctd_row_indices, clickData):
     else:
         # When no inventors are selected, show the global trend
         df_trend2 = df_trend[['Lens ID','Application Year']].drop_duplicates()
-        global_yearly_counts = df_trend2.groupby(['Application Year']).size().reset_index(name='Total Patents')
+        global_yearly_counts = df_trend2.groupby(['Application Year',]).size().reset_index(name='Total Patents',)
         fig = px.line(global_yearly_counts, x='Application Year', y='Total Patents',markers=True)
         fig.update_layout(title='Global Trend of Patent Contributions Over Years')
     
