@@ -1,4 +1,5 @@
 # index.py
+import os 
 from dash import Dash, dcc, html, callback, Input, Output, State
 import dash_bootstrap_components as dbc
 from app import app
@@ -36,4 +37,4 @@ def display_page(pathname):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 8080)))
