@@ -63,9 +63,10 @@ def Navbar():
                 
             ),
         ],
+        fluid=False,  # Makes the container fluid to use the full width
         brand="Immune Checkpoint Therapy Patent Analysis",
         brand_href="/",
-        color="primary",
+        color="dark",
         dark=True,
         className="mb-4 sticky-navbar",  # Add the sticky-navbar class
         # className="mb-4",
@@ -89,7 +90,8 @@ def Footer():
                     html.Small("Data Source: Lens.org | Last Updated: 28/01/2024 | By Maxime Descartes Mbogning"), 
                     className="text-center"
                 )
-            )
+            ),
+            fluid=False,  # Makes the container fluid to use the full width
         ),
         className="footer mt-auto py-3 bg-light"
     )
