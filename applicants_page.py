@@ -116,7 +116,49 @@ layout = dbc.Container([
     
     # Placeholder for Bar Chart
     dbc.Row(dbc.Col(dcc.Graph(id='applicant-bar-chart'), width=12)),
-    
+################### update on 30/03/2024
+    # Add a Row for the Google search link
+    dbc.Row(
+        dbc.Col(
+            html.A(
+                id='google-search-link-applicant', 
+                children='Click on an applicant to search', 
+                href='', 
+                target='_blank',
+                style={'display': 'block', 'margin': '20px 0', 'textAlign': 'center'}
+            ), 
+            width={"size": 6, "offset": 3}
+        )
+    ),
+
+    # Add a Row for the Google patent search link
+    dbc.Row(
+        dbc.Col(
+            html.A(
+                id='google-search-link-applicant-patent', 
+                children='Click on an applicant to search patents', 
+                href='', 
+                target='_blank',
+                style={'display': 'block', 'margin': '20px 0', 'textAlign': 'center'}
+            ), 
+            width={"size": 6, "offset": 3}
+        )
+    ),
+
+#     # Add a Row for the espacenet patent search link
+#     dbc.Row(
+#         dbc.Col(
+#             html.A(
+#                 id='google-search-link-applicant-patent-espacenet', 
+#                 children='Click on an applicant to search espacenet patents', 
+#                 href='', 
+#                 target='_blank',
+#                 style={'display': 'block', 'margin': '20px 0', 'textAlign': 'center'}
+#             ), 
+#             width={"size": 6, "offset": 3}
+#         )
+#     ),
+# ##################
     # Placeholder for Line Chart
     dbc.Row(dbc.Col(dcc.Graph(id='applicant-line-chart'), width=12)),
 
@@ -224,6 +266,67 @@ def update_applicant_bar_chart(rows, derived_virtual_selected_rows, selected_met
     return fig
 
 # ... (other callbacks)
+################### update on 30/03/2024
+from urllib.parse import quote_plus  # For URL encoding
+
+@callback(
+    Output('google-search-link-applicant', 'href'),  # Update the link's href
+    Output('google-search-link-applicant', 'children'),  # Optionally update the link text to make it clear
+    Input('applicant-bar-chart', 'clickData'),  # Listen to clicks on the bar chart
+    prevent_initial_call=True
+)
+def update_google_search_link(clickData):
+    if clickData is None:
+        # If no bar is clicked, don't update the link
+        return no_update, no_update
+    applicant_name = clickData['points'][0]['x']
+    search_query = f"{applicant_name} immune checkpoint"
+    search_url = f"https://www.google.com/search?q={quote_plus(search_query)}"
+    link_text = f"Search for {applicant_name} in immune checkpoint"
+    return search_url, link_text
+######################""
+######################""
+from urllib.parse import quote_plus  # For URL encoding
+
+@callback(
+    Output('google-search-link-applicant-patent', 'href'),
+    Output('google-search-link-applicant-patent', 'children'),
+    Input('applicant-bar-chart', 'clickData'),
+    prevent_initial_call=True
+)
+def update_patent_search_link(clickData):
+    if clickData is None:
+        return no_update, no_update
+    applicant_name = clickData['points'][0]['x']
+    # Constructing the query
+    search_query = f"assignee:\"{applicant_name}\" AND TAC=('checkpoint inhibitor' OR 'Immune Checkpoint' OR 'anti-pd' OR 'PD-L1')"
+    # For Google Patents
+    search_url = f"https://patents.google.com/?q={quote_plus(search_query)}"
+    link_text = f"Search patents for {applicant_name} with 'immune checkpoint'"
+    return search_url, link_text
+
+# # Espacenet search query
+# from urllib.parse import quote_plus  # For URL encoding
+
+# @callback(
+#     Output('google-search-link-applicant-patent-espacenet', 'href'),  # Assuming this is the ID of your link element
+#     Output('google-search-link-applicant-patent-espacenet', 'children'),
+#     Input('applicant-bar-chart', 'clickData'),
+#     prevent_initial_call=True
+# )
+# def update_patent_search_link(clickData):
+#     if clickData is None:
+#         return no_update, no_update
+#     applicant_name = clickData['points'][0]['x']
+#     # Constructing the Espacenet search query
+#     search_keywords = "'checkpoint inhibitor' OR 'Immune Checkpoint' OR 'anti-pd' OR 'PD-L1'"
+#     search_query = f"pa any \"{applicant_name}\" AND ctxt all \"{search_keywords}\""
+#     # Encoding the query for URL
+#     encoded_search_query = quote_plus(search_query)
+#     # Constructing the URL for Espacenet
+#     search_url = f"https://worldwide.espacenet.com/patent/search?q={encoded_search_query}&queryLang=en"
+#     link_text = f"Search Espacenet patents for {applicant_name} with 'immune checkpoint'"
+#     return search_url, link_text
 
 ####
 @callback(

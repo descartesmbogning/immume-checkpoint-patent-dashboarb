@@ -221,6 +221,38 @@ layout = dbc.Container([
 
     # ... other components ...
 
+    # dbc.Row([
+    #     dbc.Col(dcc.Link(
+    #         html.Div([
+    #             html.Img(src='/assets/inventors_icon.jpg', style={'width': '100px', 'height': '100px'}),
+    #             html.P("Inventors")
+    #         ]),
+    #         href='/inventor'
+    #     ), width={"size": 2, "offset": 1}, className="text-center"),
+    #     dbc.Col(dcc.Link(
+    #         html.Div([
+    #             html.Img(src='/assets/applicants_icon.jpg', style={'width': '100px', 'height': '100px'}),
+    #             html.P("Applicants")
+    #         ]),
+    #         href='/applicants'
+    #     ), width={"size": 2}, className="text-center"),
+    #     dbc.Col(dcc.Link(
+    #         html.Div([
+    #             html.Img(src='/assets/applicant_countries_icon.jpg', style={'width': '100px', 'height': '100px'}),
+    #             html.P("Applicant Countries")
+    #         ]),
+    #         href='/applicants_countries'
+    #     ), width={"size": 2}, className="text-center"),
+    #     dbc.Col(dcc.Link(
+    #         html.Div([
+    #             html.Img(src='/assets/jurisdictions_icon.jpg', style={'width': '100px', 'height': '100px'}),
+    #             html.P("Jurisdictions")
+    #         ]),
+    #         href='/jurisdiction'
+    #     ), width={"size": 2}, className="text-center"),
+    # ], className="mb-3 d-flex justify-content-center"),
+
+
     dbc.Row([
         dbc.Col(dcc.Link(
             html.Div([
@@ -228,28 +260,28 @@ layout = dbc.Container([
                 html.P("Inventors")
             ]),
             href='/inventor'
-        ), width={"size": 2, "offset": 1}, className="text-center"),
+        ), width={"size": 6, "sm": 4, "md": 3, "lg": 2, "xl": 2, "offset": 1}, className="text-center"),
         dbc.Col(dcc.Link(
             html.Div([
                 html.Img(src='/assets/applicants_icon.jpg', style={'width': '100px', 'height': '100px'}),
                 html.P("Applicants")
             ]),
             href='/applicants'
-        ), width={"size": 2}, className="text-center"),
+        ), width={"size": 6, "sm": 4, "md": 3, "lg": 2, "xl": 2}, className="text-center"),
         dbc.Col(dcc.Link(
             html.Div([
                 html.Img(src='/assets/applicant_countries_icon.jpg', style={'width': '100px', 'height': '100px'}),
                 html.P("Applicant Countries")
             ]),
             href='/applicants_countries'
-        ), width={"size": 2}, className="text-center"),
+        ), width={"size": 6, "sm": 4, "md": 3, "lg": 2, "xl": 2}, className="text-center"),
         dbc.Col(dcc.Link(
             html.Div([
                 html.Img(src='/assets/jurisdictions_icon.jpg', style={'width': '100px', 'height': '100px'}),
                 html.P("Jurisdictions")
             ]),
             href='/jurisdiction'
-        ), width={"size": 2}, className="text-center"),
+        ), width={"size": 6, "sm": 4, "md": 3, "lg": 2, "xl": 2}, className="text-center"),
     ], className="mb-3 d-flex justify-content-center"),
 
     # ... other components ...

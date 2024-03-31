@@ -121,7 +121,50 @@ layout = dbc.Container([
     
     # Bar Chart
     dbc.Row(dbc.Col(dcc.Graph(id='inventor-bar-chart'), width=12)),
-    
+    # Within your layout definition
+    # dbc.Row(dbc.Col(dcc.Graph(id='inventor-bar-chart'), width=12)),
+################### update on 30/03/2024
+    # Add a Row for the Google search link
+    dbc.Row(
+        dbc.Col(
+            html.A(
+                id='google-search-link-inventor', 
+                children='Click on an inventor to search', 
+                href='', 
+                target='_blank',
+                style={'display': 'block', 'margin': '20px 0', 'textAlign': 'center'}
+            ), 
+            width={"size": 6, "offset": 3}
+        )
+    ),
+    # Add a Row for the Google search link
+    dbc.Row(
+        dbc.Col(
+            html.A(
+                id='google-search-link', 
+                children='Click on an inventor to search patents', 
+                href='', 
+                target='_blank',
+                style={'display': 'block', 'margin': '20px 0', 'textAlign': 'center'}
+            ), 
+            width={"size": 6, "offset": 3}
+        )
+    ),
+
+    # # Add a Row for the -patent-espacenet search link
+    # dbc.Row(
+    #     dbc.Col(
+    #         html.A(
+    #             id='google-search-link-inventor-patent-espacenet', 
+    #             children='Click on an inventor to search patents on Espacenet', 
+    #             href='', 
+    #             target='_blank',
+    #             style={'display': 'block', 'margin': '20px 0', 'textAlign': 'center'}
+    #         ), 
+    #         width={"size": 6, "offset": 3}
+    #     )
+    # ),
+#######################""""
     # Line Chart
     dbc.Row(dbc.Col(dcc.Graph(id='inventor-line-chart'), width=12)),
 
@@ -232,6 +275,71 @@ def display_click_data(clickData):
     # Assuming you have a function to get details based on inventor name
     details = get_inventor_details(inventor_name)  
     return html.P(details)
+
+################### update on 30/03/2024
+from urllib.parse import quote_plus  # For URL encoding
+
+@callback(
+    Output('google-search-link-inventor', 'href'),  # Update the link's href
+    Output('google-search-link-inventor', 'children'),  # Optionally update the link text to make it clear
+    Input('inventor-bar-chart', 'clickData'),  # Listen to clicks on the bar chart
+    prevent_initial_call=True
+)
+def update_google_search_link(clickData):
+    if clickData is None:
+        # If no bar is clicked, don't update the link
+        return no_update, no_update
+    inventor_name = clickData['points'][0]['x']
+    search_query = f"{inventor_name} immune checkpoint"
+    search_url = f"https://www.google.com/search?q={quote_plus(search_query)}"
+    link_text = f"Search for {inventor_name} in immune checkpoint"
+    return search_url, link_text
+######################""
+from urllib.parse import quote_plus  # For URL encoding
+
+@callback(
+    Output('google-search-link', 'href'),
+    Output('google-search-link', 'children'),
+    Input('inventor-bar-chart', 'clickData'),
+    prevent_initial_call=True
+)
+def update_patent_search_link(clickData):
+    if clickData is None:
+        return no_update, no_update
+    inventor_name = clickData['points'][0]['x']
+    # Constructing the query
+    search_query = f"inventor:\"{inventor_name}\" AND TAC=('immune checkpoint' OR 'anti-pd' OR 'PD-L1')"
+    # For Google Patents
+    search_url = f"https://patents.google.com/?q={quote_plus(search_query)}"
+    link_text = f"Search patents for {inventor_name} with 'immune checkpoint'"
+    return search_url, link_text
+
+# # Espacenet search query
+# from urllib.parse import quote_plus  # For URL encoding
+
+# @callback(
+#     Output('google-search-link-inventor-patent-espacenet', 'href'),  # Assuming this is the ID of your link element
+#     Output('google-search-link-inventor-patent-espacenet', 'children'),
+#     Input('inventor-bar-chart', 'clickData'),
+#     prevent_initial_call=True
+# )
+# def update_patent_search_link(clickData):
+#     if clickData is None:
+#         return no_update, no_update
+#     inventor_name = clickData['points'][0]['x']
+#     # Constructing the Espacenet search query
+#     search_keywords = "'checkpoint inhibitor' OR 'Immune Checkpoint' OR 'anti-pd' OR 'PD-L1'"
+#     search_query = f"ia all \"{inventor_name}\" AND ta all \"{search_keywords}\""
+#     # Encoding the query for URL
+#     encoded_search_query = quote_plus(search_query)
+#     # Constructing the URL for Espacenet
+#     search_url = f"https://worldwide.espacenet.com/patent/search?q={encoded_search_query}&queryLang=en"
+#     link_text = f"Search Espacenet patents for {inventor_name} with 'immune checkpoint'"
+#     return search_url, link_text
+
+
+
+
 
 # You'll need to create a Div with the id 'inventor-details' in your layout to display the details.
 
